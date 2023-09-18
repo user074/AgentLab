@@ -1,13 +1,11 @@
 import os
 import pandas as pd
-from transformers import GPT2Tokenizer, GPT2LMHeadModel, pipeline
 import textract
+import openai
+
 
 def set_openai_api_key(api_key: str):
-    os.environ["OPENAI_API_KEY"] = api_key
-
-# Set your OpenAI API key
-set_openai_api_key('your-api-key')
+    openai.api_key = (api_key)
 
 def read_pdf(file_path: str):
     """
@@ -23,8 +21,7 @@ def read_pdf(file_path: str):
     text = doc.decode('utf-8')
     return text
 
-
-def query(text: str, question: str) -> str:
+def query(text: str, question: str,model = "gpt-3.5-turbo") -> str:
     """
     Query the given text with a question using GPT-2 and return the result.
 
@@ -35,13 +32,12 @@ def query(text: str, question: str) -> str:
     Returns:
         str: The result of the query.
     """
-    # Initialize the GPT-2 model and question answering pipeline
-    model = GPT2LMHeadModel.from_pretrained("gpt2")
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-    qa_pipeline = pipeline("question-answering", model=model, tokenizer=tokenizer)
-
+    messages = [
+    {"role": "system", "content": "You will be initially given text from a pdf file followed by a question related to that text. You must answer correctly based on the proper context"},]
+    messages.extend([{"role": "user", "content": text} ])
+    messages.extend([{"role": "user", "content": question} ])
     # Generate an answer using GPT-3
-    answer = qa_pipeline(question=question, context=text)
+    answer = openai.ChatCompletion.create(model=model, messages=messages)
 
-    return answer['answer']
+    return answer['choices'][0]["message"]["content"]
 
