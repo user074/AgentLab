@@ -3,9 +3,9 @@
 import os
 import sys
 
-p = os.path.abspath( 'd:/twist/Documents/vs_code/AgentLab/')
-if p not in sys.path:
-    sys.path.append(p)
+# p = os.path.abspath( 'd:/twist/Documents/vs_code/AgentLab/')
+# if p not in sys.path:
+    # sys.path.append(p)
 from flask import Blueprint,render_template,request
 from agentlab.main_remLC import process_pdf,query
 
