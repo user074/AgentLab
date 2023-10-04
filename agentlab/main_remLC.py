@@ -2,7 +2,8 @@ import os
 import pandas as pd
 import textract
 import openai
-
+import io
+import PyPDF2
 
 def set_openai_api_key(api_key: str):
     openai.api_key = (api_key)
@@ -17,9 +18,19 @@ def read_pdf(file_path: str):
     Returns:
         str: Extracted text from the PDF.
     """
+    
     doc = textract.process(file_path)
     text = doc.decode('utf-8')
     return text
+
+def process_pdf(pdf_file):
+        pdf_text = ""
+        with io.BytesIO(pdf_file) as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            for page_num in range(len(pdf_reader.pages)):
+                page = pdf_reader.pages[page_num]
+                pdf_text += page.extract_text()
+            return pdf_text
 
 def query(text: str, question: str,model = "gpt-3.5-turbo") -> str:
     """
