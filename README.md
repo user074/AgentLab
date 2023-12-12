@@ -1,12 +1,17 @@
 # AgentLab
 
 Primary Goal:
-* Build ChatPDF type of integration
+* Build Web Interface for the PhD research application -- UI Components for assembling agents (Jan 2024)
+* Expand the scrapper ability
+* High level research goal and memory
+* Refine the Paper Summarizer to fit the research paper styles by summarizing sections by sections
+* Integrate the Latex file to directly working on those so no need of conversion - High priority from feedback (Jan 2024)
+
+Completed
+* Build ChatPDF oneliner
 * Build Paper Polisher component
 * Build Data analysis component
+* Build Research Summarizer
+* Build Research Paper scrapper
 
-Timeline:
-* 2023/9/9: rework the ChatPDF integration (no langchain just openai api since it is much simplified). Also we can consider to integrate [nougat](https://github.com/facebookresearch/nougat)
-* 2023/9/16: integrate the paper polisher into it/ Start developing the data analysis
-* 2023/9/23: Finish the data analysis component
-* 2023/9/30: test with user week
+
